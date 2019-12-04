@@ -2,18 +2,18 @@
 
   <div class="row wow fadeIn">
 
-    <div class="col-xs-12 col-sm-6" >
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <h1 class="text-center">Experience</h1>
+      {% assign sorted = site.posts | sort: "order"  %}
+      {% for post in sorted %}
+      <div class="experience-item">
+        <h3 class="title">{{ post.title }}</h3>
+        <p class="excerpt">
 
-    </div>
-
-    <div class="col-xs-12 col-sm-6 text-center">
-      <h1>Experience</h1>
-      <a href="{{ site.performance_resume }}">
-        <button class="btn">Performance Resume</button>
-      </a>
-      <a href="{{ site.arts_admin_resume }}">
-        <button class="btn">Arts Administration Resume</button>
-      </a>
+          {{ post.excerpt }}
+        </p>
+      </div>
+      {% endfor %}
     </div>
   </div>
 

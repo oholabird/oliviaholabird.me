@@ -97,7 +97,9 @@ input.btn {
   border-radius: 0px;
   border: none;
 }
-.btn, input.btn, button.btn {
+.btn,
+input.btn,
+button.btn {
   background: none;
   border-radius: 0px;
   border-color: currentColor;
@@ -245,8 +247,8 @@ input.btn {
 }
 
 .content-section {
-  margin:0px;
-  width:100%;
+  margin: 0px;
+  width: 100%;
   padding-top: 10em;
   padding-bottom: 10em;
   @include bp-xsmall {
@@ -265,25 +267,77 @@ section#reel {
 }
 
 section#experience {
-  background-color: #303038;
-  color: #b9c3c1;
-  button.btn, input.btn {
-    color: #b9c3c1;
+  background-color: #e0d1c4;
+  color: #46312d;
+  h1 {
+    margin-bottom: 1em;
   }
-
-  background-image: url(/img/IMG_DANCE1.jpg);
-  background-size: contain;
-  background-position: left bottom;
-  background-repeat: no-repeat;
-
-  @include bp-xsmall {
-    background-image: none;
+  .experience-item {
+    h3 {
+      margin-bottom: .5em;
+    }
+    background-color: #e5d8cd;
+    border-left: 0.3em solid currentColor;
+    margin-left: 0.3em;
+    padding: .5em 1em .5em 1em;
+    margin-top: 1em;
+    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    /* Scale up the box */
+    // &:hover {
+    //   color: #da5c69;
+    // }
+      a {
+        white-space: nowrap;
+        color: currentColor;
+        position: relative;
+        z-index: 1;
+        transition: color .1s ease-in-out;
+        &:hover {
+          color: #fff;
+        }
+      }
+      
+      a::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: -0.1em;
+        right: -0.1em;
+        background-color: #da5c69;
+        transform-origin: bottom center;
+        transform: scaleY(0.05);
+        transition: all 0.1s ease-in-out;
+      }
+      
+      a:hover::before {
+        transform: scaleY(1);
+        background-color: #da5c69;
+      }
+    // /* Fade in the pseudo-element with the bigger shadow */
+    // &:hover::after {
+    //   opacity: 1;
+    // }
+    // &::after {
+    //   content: "";
+    //   border-radius: 5px;
+    //   position: absolute;
+    //   z-index: -1;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    //   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    //   opacity: 1;
+    //   -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    //   transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    // }
   }
 }
 section#contact {
-  background-color: #B9C3C1;
-
-
+  background-color: #b9c3c1;
 }
 /*--------------------------------------------------------------
 	3.0 Posts
@@ -323,71 +377,6 @@ section#portfolio {
   }
   @include bp-small {
     width: 60%;
-  }
-}
-
-.content-wrap {
-  margin-bottom: 8em;
-  @include bp-xsmall {
-    margin-bottom: 2em;
-  }
-  @include bp-small {
-    margin-bottom: 2em;
-  }
-  img.img-responsive {
-    @include bp-xsmall {
-      display: none;
-    }
-    @include bp-small {
-      display: none;
-    }
-  }
-  .content {
-    margin-top: 5em;
-    margin-left: 5em;
-    @include bp-xsmall {
-      margin-left: 0;
-    }
-    h3.title {
-      position: relative;
-      margin-bottom: 1.5em;
-      &:after {
-        content: "";
-        position: absolute;
-        top: 1.5em;
-        left: 0;
-        width: 3em;
-        height: 3px;
-        background-color: #eceff1;
-      }
-    }
-    .excerpt {
-      width: 80%;
-      @include bp-xsmall {
-        width: 100%;
-      }
-    }
-    button {
-      font-size: 16px;
-      margin-left: 0;
-      margin-bottom: 1em;
-      margin-top: 1em;
-    }
-    .tags,
-    .categories {
-      margin: 2em 0;
-      span {
-        color: #9eb1bd;
-        background-color: #eceff1;
-        padding: 0.5em 1.5em;
-        display: inline-block;
-        margin-bottom: 0.5em;
-      }
-    }
-    .categories span {
-      color: #b9b1ad;
-      background-color: #efebe9;
-    }
   }
 }
 
