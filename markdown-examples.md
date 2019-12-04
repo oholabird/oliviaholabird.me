@@ -8,6 +8,7 @@ permalink: /about/
 Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`.
 
 [Link to another page](/index.html).
+[Link to another page in new tab](/index.html){:target="_blank"}.
 
 There should be whitespace between paragraphs.
 
@@ -99,7 +100,7 @@ end
 
 ### Wide image
 
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
+![Branching](https://guides.github.com/activities/hello-world/branching.png){:class="img-responsive"}
 
 ### Definition lists can be used with HTML syntax.
 
