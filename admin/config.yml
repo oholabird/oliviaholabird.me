@@ -9,10 +9,21 @@ collections:
   - name: "experience"
     label: "Item"
     folder: "_posts"
-    create: true # Allow users to create new documents in this collection
+    create: false # Allow users to create new documents in this collection
     slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     fields:
       - {label: "Layout", name: "layout", widget: "hidden", default: "inner"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Order", name: "order", widget: "number"}
- 
+  - name: "gallery"
+    label: "Gallery Photo"
+    folder: "_gallery"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "img"
+    fields: 
+      - label: "Image"
+        name: "img"
+        widget: "image"
+        allow_multiple: false
+        # default: "/uploads/chocolate-dogecoin.jpg"
