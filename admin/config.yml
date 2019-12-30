@@ -21,10 +21,10 @@ collections:
     folder: "_gallery"
     create: true
     slug: "{{slug}}"
-    identifier_field: "img"
+    identifier_field: "src"
     fields: 
-      - label: "Image"
-        name: "img"
-        widget: "image"
-        allow_multiple: false
+      - {label: "Image", name: "src", widget: "image", allow_multiple: false }
+      - {label: "Width", name: "width", widget: "number"}
+      - {label: "Height", name: "height", widget: "number"}
+      
         # default: "/uploads/chocolate-dogecoin.jpg"
