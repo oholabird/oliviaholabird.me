@@ -4,13 +4,13 @@
 
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <h1 class="text-center">Experience</h1>
-      {% assign sorted = site.posts | sort: "order"  %}
-      {% for post in sorted %}
+      {% assign sorted = site.experience | sort: "order"  %}
+      {% for item in sorted %}
       <div class="experience-item">
-        <h3 class="title">{{ post.title }}</h3>
+        <h3 class="title">{{ item.title }}</h3>
         <p class="excerpt">
 
-          {{ post.excerpt }}
+          {{ item.excerpt }}
         </p>
       </div>
       {% endfor %}

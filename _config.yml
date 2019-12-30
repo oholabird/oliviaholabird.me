@@ -25,6 +25,8 @@ performance_resume: ''
 arts_admin_resume: ''
 
 collections:
+  experience:
+    output: false
   gallery:
     output: false
 
