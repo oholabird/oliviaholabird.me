@@ -24,6 +24,10 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 performance_resume: ''
 arts_admin_resume: ''
 
+collections:
+  gallery:
+    output: false
+
 # Build settings
 markdown: kramdown
 # theme: phantom # Uncomment once published to RubyGems
