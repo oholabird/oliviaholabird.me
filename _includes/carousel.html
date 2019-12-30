@@ -1,0 +1,24 @@
+{% comment %}
+source: https://jekyllcodex.org/without-plugin/image-gallery/#
+{% endcomment %}
+<style>
+    .image-gallery {overflow: auto; margin-left: -1%!important;}
+    .image-gallery li {float: left; display: block; margin: 0 0 1% 1%; width: 19%;}
+    .image-gallery li a {text-align: center; text-decoration: none!important; color: #777;}
+    .image-gallery li a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
+    .image-gallery li a img {width: 100%; display: block;}
+</style>
+
+<ul class="image-gallery">
+  {% for item in site.gallery %}
+      {% assign filenameparts = item.img | split: "/" %}
+      {% assign filename = filenameparts | last %}
+      <li>
+        <a href="{{ item.img | relative_url }}" title="{{ filename }}">
+          <img src="//images.weserv.nl/?url=oliviaholabird.me{{ item.img | relative_url }}&w=300&h=300&output=jpg&q=50&t=square" alt="{{ filename }}" title="{{ filename }}" />
+          <span>{{ filename }}</span>
+        </a>
+      </li>
+  {% endfor %}
+</ul>
+{%- comment -%} {{ site.url | replace: 'http://','' | replace: 'https://','' }} {%- endcomment -%}
