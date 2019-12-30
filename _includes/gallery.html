@@ -1,183 +1,239 @@
 <section class="container content-section" id="gallery">
-  {% assign letterstring = "a,b,c,d,e,f,g,h,i,j,k,l,m,n" %}
-  {% assign letters = letterstring | split: ',' %}
-  
-  <div class="carousel__holder">
-      <div class="carousel">
-          {% for item in site.gallery %}
-            <input class="carousel__activator" type="radio" name="carousel" id="{{ letters[forloop.index0] }}" {% if forloop.first %}checked="checked"{% endif %} />
-          {% endfor %}
-          {% for item in site.gallery %}
-            {% if forloop.index == forloop.length %}
-              {% assign nextindex = 0 %}
-            {% else %}
-              {% assign nextindex = forloop.index0 | plus: 1 %}
-            {% endif %}
-            {% assign nextletter = letters[nextindex] %}
-            {% if forloop.index0 == 0 %}
-              {% assign previndex = forloop.length | minus: 1 %}
-            {% else %}
-              {% assign previndex = forloop.index0 | minus: 1 %}
-            {% endif %}
-            {% assign prevletter = letters[previndex] %}
-            <div class="carousel__controls">
-                <label class="carousel__control carousel__control--backward" for="{{ prevletter }}"></label>
-                <label class="carousel__control carousel__control--forward" for="{{ nextletter }}"></label>
-            </div>
-          {% endfor %}
-          <div class="carousel__track">
-            <ul>
-              {% for item in site.gallery %}
-              <li class="carousel__slide" style="background-image: url('{{ item.img }}');"></li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div class="carousel__indicators">
-              {% for item in site.gallery %}
-                <label class="carousel__indicator" for="{{ letters[forloop.index0] }}"></label>
-              {% endfor %}
-          </div>
-      </div>
+  <h1 class="text-center">Gallery</h1>
+  <div class="grid">
+  {% for img in site.gallery %}
+  {% assign filenameparts = img.src | split: "/" %}
+  {% assign filename = filenameparts | last %}
+  <div class="grid__item" data-size="{{img.width}}x{{img.height}}">
+    <a href="{{img.src}}" class="img-wrap">
+      <img src="//images.weserv.nl/?url=oliviaholabird.me{{ img.src | relative_url }}&w=300&output=jpg&q=50"
+        alt="{{ filename }}" title="{{ filename }}" />
+      <div class="description description--grid"></div>
+    </a>
   </div>
+  {% endfor %}
+</div>
+
+<div class="preview">
+  <button class="action action--close"><i class="fa fa-times"></i><span class="text-hidden">Close</span></button>
+  <div class="description description--preview"></div>
+</div>
+
 </section>
 
-
 <style>
-  .carousel__holder {width: 100%; position: relative; padding-bottom: {{ include.height }}{{ include.unit }}; margin: 1rem 0 1rem;}
-  .carousel {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
+  .navbar {
+    transition: transform .2s ease-in-out;
+  }
+  .grid {
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  .js .grid::after {
+    content: '';
     position: absolute;
-    padding: 0;
-  }
-  .carousel__controls,
-  .carousel__activator {
-    display: none;
-  }
-  {% for item in site.gallery %}
-  .carousel__activator:nth-of-type({{ forloop.index }}):checked ~ .carousel__track {
-    -webkit-transform: translateX(-{{ forloop.index0 }}00%);
-            transform: translateX(-{{ forloop.index0 }}00%);
-  }
-  .carousel__activator:nth-of-type({{ forloop.index }}):checked ~ .carousel__slide:nth-of-type({{ forloop.index }}) {
-    transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    right: 0;
-    opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    pointer-events: none;
+    background: #252323 url(../img/loading.svg) no-repeat 50% 75px;
+    background-size: 60px auto;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
-  .carousel__activator:nth-of-type({{ forloop.index }}):checked ~ .carousel__controls:nth-of-type({{ forloop.index }}) {
-    display: block;
-    opacity: 1;
-  }
-  .carousel__activator:nth-of-type({{ forloop.index }}):checked ~ .carousel__indicators .carousel__indicator:nth-of-type({{ forloop.index }}) {
-    opacity: 1;
-  }
-  {% endfor %}
   
-  .carousel__control {
-    height: 30px;
-    width: 30px;
-    margin-top: -15px;
-    top: 50%;
-    position: absolute;
+  .js .grid--loaded::after {
+    opacity: 0;
+  }
+  
+  .grid__item {
+    width: 270px;
+    padding: 10px;
+  }
+  
+  .grid__item--current {
+    opacity: 0 !important;
+  }
+  
+  .img-wrap {
     display: block;
-    cursor: pointer;
-    border-width: 5px 5px 0 0;
-    border-style: solid;
-    border-color: #fafafa;
-    opacity: 0.35;
-    opacity: 1;
-    outline: 0;
-    z-index: 3;
   }
-  .carousel__control:hover {
-    opacity: 1;
+  
+  .img-wrap:focus,
+  .img-wrap:hover {
+    outline: none;
   }
-  .carousel__control--backward {
-    left: 20px;
-    -webkit-transform: rotate(-135deg);
-            transform: rotate(-135deg);
+  
+  .img-wrap img {
+    display: block;
+    max-width: 100%;
   }
-  .carousel__control--forward {
-    right: 20px;
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-  }
-  .carousel__indicators {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-  }
-  .carousel__indicator {
-    height: 15px;
-    width: 15px;
-    border-radius: 100%;
-    display: inline-block;
-    z-index: 2;
-    cursor: pointer;
-    opacity: 0.35;
-    margin: 0 2.5px 0 2.5px;
-  }
-  .carousel__indicator:hover {
-    opacity: 0.75;
-  }
-  .carousel__track {
-    position: absolute;
-    top: 0;
-    right: 0;
+  
+  .preview {
+    position: fixed;
+    z-index: 1050;
     bottom: 0;
     left: 0;
-    padding: 0;
-    margin: 0;
-    transition: -webkit-transform 0.5s ease 0s;
-    transition: transform 0.5s ease 0s;
-    transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -ms-flex-line-pack: center;
+    -webkit-align-content: center;
+    align-content: center;
+    -ms-flex-align: end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    height: 75%;
+    pointer-events: none;
   }
-  .carousel__track .carousel__slide {
-    display: block;
+  
+  .preview::before {
+    content: '';
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    background: #1f1d1d;
+    -webkit-transition: opacity 0.6s;
+    transition: opacity 0.6s;
+  }
+  
+  .preview--open {
+    pointer-events: auto;
+  }
+  
+  .preview--open::before {
     opacity: 1;
   }
-  {% for item in site.gallery %}
-  .carousel__track .carousel__slide:nth-of-type({{ forloop.index }}) {
-    -webkit-transform: translateX({{ forloop.index0 }}00%);
-            transform: translateX({{ forloop.index0 }}00%);
-  }
-  {% endfor %}
   
-  .carousel--scale .carousel__slide {
-    -webkit-transform: scale(0);
-            transform: scale(0);
+  .clone {
+    position: fixed;
+    z-index: 110;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+    -webkit-backface-visibility: hidden;
   }
-  .carousel__slide {
-    height: 100%;
+  
+  .original {
+    position: relative;
+    z-index: 120;
+    display: block;
+    margin: auto 0;
+    object-fit: contain;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  .preview--open .animate {
+    /* open */
+    -webkit-transition: -webkit-transform 0.6s, opacity 0.2s;
+    transition: transform 0.6s, opacity 0.2s;
+  }
+  
+  .animate {
+    /* close */
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.2s;
+  }
+  
+  .description {
+    color: #fff;
+  }
+  
+  .js .description--grid {
+    display: none;
+  }
+  
+  .description--preview {
+    font-size: 1.5em;
     position: absolute;
+    height: 25vh;
+    width: 100%;
+    left: 0;
+    bottom: 100%;
+    z-index: 140;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    text-align: center;
     opacity: 0;
+    -webkit-transition: opacity 1s, -webkit-transform 1s;
+    transition: opacity 1s, transform 1s;
+    -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+    -webkit-transform: translate3d(0, 30px, 0);
+    transform: translate3d(0, 30px, 0);
+  }
+  
+  .preview--open .description--preview {
+    opacity: 1;
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  
+  
+  /* Close button */
+  
+  .action {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: top;
+    color: #fff;
+    border: none;
+    background: none;
+  }
+  
+  .action:hover,
+  .action:focus {
+    color: #fff;
+    outline: none;
+  }
+  
+  .action--close {
+    position: fixed;
+    z-index: 150;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -webkit-transform: scale3d(0.6, 0.6, 1);
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  
+  .preview--image-loaded .action--close {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+  
+  .text-hidden {
+    position: absolute;
+    display: block;
     overflow: hidden;
+    width: 0;
+    height: 0;
+    color: transparent;
   }
-  .carousel__slide .overlay {height: 100%;}
-  .carousel--thumb .carousel__indicator {
-    height: 30px;
-    width: 30px;
-  }
-  .carousel__indicator {
-    background-color: #fafafa;
-  }
-  {% for item in site.gallery %}
-  .carousel__slide:nth-of-type({{ forloop.index }}),
-  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type({{ forloop.index }}) {
-    background-size: cover;
-    background-position: center;
-  }
-  {% endfor %}
-  </style>
+  
+</style>
