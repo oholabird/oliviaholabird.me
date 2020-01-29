@@ -1,6 +1,6 @@
 ---
-src: /img/IMG_0026 edit.jpg
-width: 3925
-height: 3925
+src: /img/IMG_0059 edit.jpg
+width: 3294
+height: 4117
 ---
 
